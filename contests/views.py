@@ -1,6 +1,7 @@
 """API views exposing the scraped contests, mirroring the original endpoints."""
 from django.db.models import F
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from .constants import ACTIVE_SITES
@@ -12,12 +13,18 @@ class ApiIndexView(APIView):
     """GET /api — lists the available contest endpoints."""
 
     def get(self, request):
-        sites = [{"name": name, "endpoint": f"/api/v1/{key}"} for name, key, _ in ACTIVE_SITES]
+        sites = [
+            {
+                "name": name,
+                "endpoint": reverse(f"api_v1_{key}", request=request),
+            }
+            for name, key, _ in ACTIVE_SITES
+        ]
         return Response(
             {
                 "endpoints": {
-                    "all": "/api/v1/all",
-                    "sites": "/api/v1/sites",
+                    "all": reverse("api_v1_all", request=request),
+                    "sites": reverse("api_v1_sites", request=request),
                 },
                 "sites": sites,
             }
