@@ -8,6 +8,22 @@ from .models import Contest
 from .serializers import AllContestsSerializer, SITE_SERIALIZERS
 
 
+class ApiIndexView(APIView):
+    """GET /api — lists the available contest endpoints."""
+
+    def get(self, request):
+        sites = [{"name": name, "endpoint": f"/api/v1/{key}"} for name, key, _ in ACTIVE_SITES]
+        return Response(
+            {
+                "endpoints": {
+                    "all": "/api/v1/all",
+                    "sites": "/api/v1/sites",
+                },
+                "sites": sites,
+            }
+        )
+
+
 class AllContestsView(APIView):
     """GET /api/v1/all — every contest across all supported sites."""
 
