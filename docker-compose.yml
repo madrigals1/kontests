@@ -3,22 +3,10 @@ services:
     build: .
     restart: unless-stopped
     env_file: .env
-    # Connect to the network hosting the existing PostgreSQL instance the
-    # app is configured to talk to (see .env -> POSTGRES_HOST). The network
-    # name is itself configured via .env -> DATABASE_NETWORK.
     networks:
       - database_network
     ports:
       - "${PORT}:8000"
-    command: >
-      sh -c "
-        until python manage.py dbshell </dev/null >/dev/null 2>&1; do
-          echo 'Waiting for database...' && sleep 2
-        done
-        python manage.py migrate
-        (python manage.py scheduler &)
-        python manage.py runserver 0.0.0.0:8000
-      "
 
 networks:
   database_network:

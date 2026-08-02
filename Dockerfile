@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.14-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -13,5 +13,11 @@ RUN pip install --no-cache-dir pipenv
 RUN pipenv install --system --deploy
 
 COPY . .
+
+# Entrypoint handles DB readiness, migrations, the background scheduler and
+# serving the dev API server.
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 8000
