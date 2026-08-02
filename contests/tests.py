@@ -164,6 +164,56 @@ class AllContestsViewTests(TestCase):
         self.assertEqual(data[-1], ["Toph", "toph", "https://toph.co"])
 
 
+class ComingContestsViewTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        now = datetime(2030, 1, 1, 12, 0, tzinfo=UTC)
+        future = now + timedelta(hours=2)  # within the 24h window
+        later = now + timedelta(hours=26)  # outside the window
+        past = now - timedelta(hours=2)
+        Contest.objects.create(
+            site="codeforces",
+            name="Soon",
+            url="https://example.com/soon",
+            start_time=future,
+            end_time=future + timedelta(hours=1),
+            duration=3600,
+            status="BEFORE",
+            in_24_hours=True,
+        )
+        Contest.objects.create(
+            site="code_chef",
+            name="Too far",
+            url="https://example.com/far",
+            start_time=later,
+            end_time=later + timedelta(hours=1),
+            duration=3600,
+            status="BEFORE",
+            in_24_hours=False,
+        )
+        Contest.objects.create(
+            site="leet_code",
+            name="Started",
+            url="https://example.com/started",
+            start_time=past,
+            end_time=past + timedelta(hours=1),
+            duration=3600,
+            status="CODING",
+            in_24_hours=True,  # stored flag is stale on purpose
+        )
+        self._now = now
+
+    def test_only_contests_in_next_24h_returned(self):
+        from unittest import mock
+
+        with mock.patch("contests.views.timezone.now", return_value=self._now):
+            response = self.client.get("/api/v1/coming")
+        data = response.json()
+        names = [item["name"] for item in data]
+        self.assertEqual(names, ["Soon"])
+        self.assertIn("site", data[0])
+
+
 class TophServiceTests(TestCase):
     HTML = """
     <html><body>

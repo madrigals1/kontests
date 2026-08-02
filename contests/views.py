@@ -1,6 +1,10 @@
 """API views exposing the scraped contests, mirroring the original endpoints."""
 
+from datetime import timedelta
+
 from django.db.models import F
+from django.utils import timezone
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -25,6 +29,7 @@ class ApiIndexView(APIView):
             {
                 "endpoints": {
                     "all": reverse("api_v1_all", request=request),
+                    "coming": reverse("api_v1_coming", request=request),
                     "sites": reverse("api_v1_sites", request=request),
                 },
                 "sites": sites,
@@ -52,6 +57,25 @@ class SiteContestsView(APIView):
             F("start_time").asc(nulls_last=True)
         )
         return Response(serializer_class(queryset, many=True).data)
+
+
+class ComingContestsView(APIView):
+    """GET /api/v1/coming — contests starting in the next 24 hours.
+
+    Unlike the stored ``in_24_hours`` flag (which goes stale between scrapes),
+    this is computed at request time so it stays accurate when polled every
+    few minutes.
+    """
+
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        now = timezone.now()
+        window_end = now + timedelta(hours=24)
+        queryset = Contest.objects.filter(
+            start_time__gte=now, start_time__lte=window_end
+        ).order_by(F("start_time").asc(nulls_last=True))
+        return Response(AllContestsSerializer(queryset, many=True).data)
 
 
 class SitesView(APIView):

@@ -1,10 +1,16 @@
 from django.urls import path
 
 from .constants import ACTIVE_SITES
-from .views import AllContestsView, SiteContestsView, SitesView
+from .views import (
+    AllContestsView,
+    ComingContestsView,
+    SiteContestsView,
+    SitesView,
+)
 
 urlpatterns = [
     path("v1/all", AllContestsView.as_view(), name="api_v1_all"),
+    path("v1/coming", ComingContestsView.as_view(), name="api_v1_coming"),
     path("v1/sites", SitesView.as_view(), name="api_v1_sites"),
 ]
 
