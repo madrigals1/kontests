@@ -1,4 +1,5 @@
 """Toph scraper (parses the contests listing page)."""
+
 from datetime import datetime
 
 from ..utils import UTC

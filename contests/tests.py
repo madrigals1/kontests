@@ -37,7 +37,18 @@ class ContestFixtures:
 
     @staticmethod
     def leetcode():
-        return {"data": {"allContests": [{"title": "Biweekly 1", "titleSlug": "bw1", "startTime": 1600000000, "duration": 5400}]}}
+        return {
+            "data": {
+                "allContests": [
+                    {
+                        "title": "Biweekly 1",
+                        "titleSlug": "bw1",
+                        "startTime": 1600000000,
+                        "duration": 5400,
+                    }
+                ]
+            }
+        }
 
     @staticmethod
     def codechef():
@@ -147,7 +158,9 @@ class AllContestsViewTests(TestCase):
         response = self.client.get("/api/v1/sites")
         data = response.json()
         # "All" is excluded from the supported sites list, matching the upstream.
-        self.assertEqual(data[0], ["CodeForces", "codeforces", "https://codeforces.com"])
+        self.assertEqual(
+            data[0], ["CodeForces", "codeforces", "https://codeforces.com"]
+        )
         self.assertEqual(data[-1], ["Toph", "toph", "https://toph.co"])
 
 

@@ -1,7 +1,7 @@
 """Serializers producing the exact output shape of the original kontests API."""
+
 from rest_framework import serializers
 
-from .models import Contest
 from .utils import duration_seconds, to_bool_flag, utc_format
 
 

@@ -1,4 +1,5 @@
 """LeetCode scraper (GraphQL endpoint)."""
+
 from datetime import datetime, timedelta
 
 from ..utils import UTC

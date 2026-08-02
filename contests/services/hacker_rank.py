@@ -1,10 +1,11 @@
 """HackerRank scraper (public REST endpoints)."""
+
 from datetime import datetime
 
 import requests
 
-from .base import USER_AGENT, BaseService
 from ..utils import UTC
+from .base import USER_AGENT, BaseService
 
 UPCOMING_URL = "https://www.hackerrank.com/rest/contests/upcoming?limit=100"
 COLLEGE_URL = "https://www.hackerrank.com/rest/contests/college?limit=100"
@@ -31,8 +32,12 @@ class HackerRankService(BaseService):
 
     def extract_contests(self, data):
         data1, data2 = data
-        regular = [dict(element, type_="Regular") for element in data1.get("models", [])]
-        college = [dict(element, type_="College") for element in data2.get("models", [])]
+        regular = [
+            dict(element, type_="Regular") for element in data1.get("models", [])
+        ]
+        college = [
+            dict(element, type_="College") for element in data2.get("models", [])
+        ]
         return sorted(
             regular + college, key=lambda element: element.get("epoch_starttime", 0)
         )

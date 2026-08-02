@@ -1,4 +1,5 @@
 """CS Academy scraper (parses the contests listing page)."""
+
 import re
 from datetime import datetime
 
@@ -44,12 +45,12 @@ class CsAcademyService(BaseService):
 
     @staticmethod
     def _parse_start(value):
-        match = re.search(
-            r"(\d{1,2}\s+\w+\s+\d{4})\s+(\d{1,2}:\d{2})", value
-        )
+        match = re.search(r"(\d{1,2}\s+\w+\s+\d{4})\s+(\d{1,2}:\d{2})", value)
         if not match:
             return None
-        parsed = datetime.strptime(f"{match.group(1)} {match.group(2)}", "%d %B %Y %H:%M")
+        parsed = datetime.strptime(
+            f"{match.group(1)} {match.group(2)}", "%d %B %Y %H:%M"
+        )
         return parsed.replace(tzinfo=UTC)
 
     @staticmethod

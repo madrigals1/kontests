@@ -1,4 +1,5 @@
 """Registry of all site scraper services."""
+
 from .at_coder import AtCoderService
 from .code_chef import CodeChefService
 from .codeforces import CodeforcesGymService, CodeforcesService

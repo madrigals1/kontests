@@ -4,6 +4,7 @@ Usage:
     python manage.py update_contests
     python manage.py update_contests --sites codeforces at_coder
 """
+
 import logging
 
 from django.core.management.base import BaseCommand

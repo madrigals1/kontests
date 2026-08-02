@@ -1,4 +1,4 @@
-from datetime import timedelta
+"""Site list and shared constants."""
 
 SITES = [
     ("All", "all", "https://kontests.net"),

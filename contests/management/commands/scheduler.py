@@ -3,6 +3,7 @@
 Usage:
     python manage.py scheduler
 """
+
 import logging
 
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -17,8 +18,8 @@ from ...services import (
     HackerEarthService,
     HackerRankService,
     LeetCodeService,
-    TophService,
     TopCoderService,
+    TophService,
 )
 
 logger = logging.getLogger(__name__)
@@ -55,7 +56,9 @@ class Command(BaseCommand):
                 next_run_time=None,
             )
             for service_cls in service_classes:
-                self.stdout.write(f"Scheduled {service_cls.__name__} every {minutes} minutes")
+                self.stdout.write(
+                    f"Scheduled {service_cls.__name__} every {minutes} minutes"
+                )
         self.stdout.write("Scheduler started. Press Ctrl+C to stop.")
         try:
             scheduler.start()

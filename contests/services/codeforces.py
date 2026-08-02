@@ -1,4 +1,5 @@
 """Codeforces (regular contests) scraper."""
+
 from datetime import datetime, timedelta
 
 from ..constants import CODEFORCES_ACTIVE_PHASES
@@ -25,9 +26,7 @@ class CodeforcesBaseService(BaseService):
         start = None
         end = None
         if contest.get("startTimeSeconds"):
-            start = datetime.fromtimestamp(
-                contest["startTimeSeconds"], tz=UTC
-            )
+            start = datetime.fromtimestamp(contest["startTimeSeconds"], tz=UTC)
             end = start + timedelta(seconds=duration)
 
         return self.build_info(

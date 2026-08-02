@@ -1,4 +1,5 @@
 """CodeChef scraper (public list contests API)."""
+
 from datetime import datetime, timedelta
 
 from ..utils import UTC

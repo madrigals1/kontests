@@ -10,7 +10,9 @@ class Contest(models.Model):
 
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
-    duration = models.IntegerField(null=True, blank=True, help_text="Duration in seconds.")
+    duration = models.IntegerField(
+        null=True, blank=True, help_text="Duration in seconds."
+    )
 
     status = models.CharField(max_length=10, db_index=True)
     in_24_hours = models.BooleanField(default=False)

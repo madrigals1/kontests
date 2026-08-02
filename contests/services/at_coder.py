@@ -1,4 +1,5 @@
 """AtCoder scraper (parses the public contests listing page)."""
+
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 

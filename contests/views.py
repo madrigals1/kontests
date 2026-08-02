@@ -1,4 +1,5 @@
 """API views exposing the scraped contests, mirroring the original endpoints."""
+
 from django.db.models import F
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -6,7 +7,7 @@ from rest_framework.views import APIView
 
 from .constants import ACTIVE_SITES
 from .models import Contest
-from .serializers import AllContestsSerializer, SITE_SERIALIZERS
+from .serializers import SITE_SERIALIZERS, AllContestsSerializer
 
 
 class ApiIndexView(APIView):

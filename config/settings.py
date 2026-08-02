@@ -1,6 +1,7 @@
 """
 Django settings for the kontests project.
 """
+
 import os
 from pathlib import Path
 
@@ -34,8 +35,8 @@ else:
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "kontests"),
             "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
             "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        }
     }
-}
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -78,7 +79,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},

@@ -13,6 +13,13 @@ lxml = "*"
 apscheduler = "*"
 
 [dev-packages]
+black = "*"
+isort = "*"
+pyflakes = "*"
 
 [requires]
 python_version = "3.14"
+
+[scripts]
+lint = "bash -c 'isort . && black .'"
+

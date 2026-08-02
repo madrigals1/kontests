@@ -1,4 +1,5 @@
 """HackerEarth scraper (public events endpoint)."""
+
 from datetime import datetime
 
 from ..utils import UTC

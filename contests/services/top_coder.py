@@ -1,9 +1,9 @@
 """TopCoder scraper, backed by its public Google Calendar feed."""
+
 import os
 from datetime import datetime
 from urllib.parse import quote
 
-from ..constants import UNKNOWN
 from ..utils import UTC
 from .base import BaseService
 
